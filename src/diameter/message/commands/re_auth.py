@@ -211,7 +211,7 @@ class ReAuthRequest(ReAuth):
         AvpGenDef("destination_realm", AVP_DESTINATION_REALM, is_required=True),
         AvpGenDef("destination_host", AVP_DESTINATION_HOST, is_mandatory=False),
         AvpGenDef("auth_application_id", AVP_AUTH_APPLICATION_ID, is_required=True),
-        AvpGenDef("re_auth_request_type", AVP_RE_AUTH_REQUEST_TYPE, is_required=True),
+        AvpGenDef("re_auth_request_type", AVP_RE_AUTH_REQUEST_TYPE, is_required=False),
         AvpGenDef("user_name", AVP_USER_NAME),
         AvpGenDef("origin_state_id", AVP_ORIGIN_STATE_ID),
         AvpGenDef("proxy_info", AVP_PROXY_INFO, type_class=ProxyInfo),

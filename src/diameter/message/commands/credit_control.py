@@ -130,6 +130,8 @@ class CreditControlAnswer(CreditControl):
     oc_olr: OcOlr
     service_information: ServiceInformation
 
+    experimental_result: ExperimentalResult
+
     avp_def: AvpGenType = (
         AvpGenDef("session_id", AVP_SESSION_ID, is_required=True),
         AvpGenDef("result_code", AVP_RESULT_CODE, is_required=True),
@@ -167,6 +169,7 @@ class CreditControlAnswer(CreditControl):
         AvpGenDef("service_information", AVP_TGPP_SERVICE_INFORMATION, VENDOR_TGPP, type_class=ServiceInformation),
         AvpGenDef("bearer_control_mode", AVP_TGPP_BEARER_CONTROL_MODE, VENDOR_TGPP),
         AvpGenDef("charging_rule_install", AVP_TGPP_CHARGING_RULE_INSTALL, VENDOR_TGPP, type_class=ChargingRuleInstall),
+        AvpGenDef("experimental_result", AVP_EXPERIMENTAL_RESULT, type_class=ExperimentalResult),
     )
 
     def __post_init__(self):

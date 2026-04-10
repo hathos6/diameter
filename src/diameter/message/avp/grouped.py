@@ -56,8 +56,10 @@ __all__ = [
     "CcMoney",
     "ChapAuth",
     "ChargingInformation",
+    "ChargingRuleDefinition",
     "ChargingRuleInstall",
     "ChargingRuleRemove",
+    "ChargingRuleReport",
     "Classifier",
     "CommunicationPatternSet",
     "CostInformation",
@@ -91,6 +93,7 @@ __all__ = [
     "FilterRule",
     "FinalUnitIndication",
     "FixedUserLocationInfo",
+    "FlowInformation",
     "Flows",
     "FromSpec",
     "FromToSpec",
@@ -6027,15 +6030,62 @@ class MediaComponentDescription:
 
 
 @dataclasses.dataclass
-class ChargingRuleInstall:
-    """A data container that represents the "Charging-Rule-Install" (1001) grouped AVP."""
-    charging_rule_base_name: list[Avp] = dataclasses.field(default_factory=list)
-    charging_rule_name: list[Avp] = dataclasses.field(default_factory=list)
+class FlowInformation:
+    """A data container that represents the "Flow-Information" (1058) grouped AVP."""
+#    Flow-Information ::= < AVP Header: 1058 >
+#       [ Flow-Description ]
+#       [ Packet-Filter-Identifier ]
+#       [ Packet-Filter-Usage ]
+#       [ ToS-Traffic-Class ]
+#       [ Security-Parameter-Index ]
+#       [ Flow-Label ]
+#       [ Flow-Direction ]
+#       [ Routing-Rule-Identifier ]
+#       *[ AVP ]
+
+    flow_description: list[bytes] = dataclasses.field(default_factory=list)
+    packet_filter_usage: int = None
+    flow_direction: int = None
 
     # noinspection PyDataclass
     avp_def: dataclasses.InitVar[AvpGenType] = (
+        AvpGenDef("flow_description", AVP_TGPP_FLOW_DESCRIPTION, VENDOR_TGPP),
+        AvpGenDef("packet_filter_usage", AVP_TGPP_PACKET_FILTER_USAGE, VENDOR_TGPP),
+        AvpGenDef("flow_direction", AVP_TGPP_FLOW_DIRECTION, VENDOR_TGPP),
+    )
+
+
+@dataclasses.dataclass
+class ChargingRuleDefinition:
+    """A data container that represents the "Charging-Rule-Definition" (1003) grouped AVP."""
+    charging_rule_name: list[Avp] = dataclasses.field(default_factory=list)
+    flow_information: FlowInformation = None
+    qos_information: QosInformation = None
+    precedence: int = None
+
+    # noinspection PyDataclass
+    avp_def: dataclasses.InitVar[AvpGenType] = (
+        AvpGenDef("charging_rule_name", AVP_TGPP_CHARGING_RULE_NAME, VENDOR_TGPP),
+        AvpGenDef("flow_information", AVP_TGPP_FLOW_INFORMATION, VENDOR_TGPP, type_class=FlowInformation),
+        AvpGenDef("qos_information", AVP_TGPP_QOS_INFORMATION, VENDOR_TGPP, type_class=QosInformation),
+        AvpGenDef("precedence", AVP_TGPP_PRECEDENCE, VENDOR_TGPP),
+    )
+
+
+@dataclasses.dataclass
+class ChargingRuleInstall:
+    """A data container that represents the "Charging-Rule-Install" (1001) grouped AVP."""
+    charging_rule_definition: list[ChargingRuleDefinition] = dataclasses.field(default_factory=list)
+    charging_rule_base_name: list[Avp] = dataclasses.field(default_factory=list)
+    charging_rule_name: list[Avp] = dataclasses.field(default_factory=list)
+    resource_allocation_notification: int = dataclasses.field(default_factory=list)
+
+    # noinspection PyDataclass
+    avp_def: dataclasses.InitVar[AvpGenType] = (
+        AvpGenDef("charging_rule_definition", AVP_TGPP_CHARGING_RULE_DEFINITION, VENDOR_TGPP, type_class=ChargingRuleDefinition),
         AvpGenDef("charging_rule_base_name", AVP_TGPP_CHARGING_RULE_BASE_NAME, VENDOR_TGPP),
         AvpGenDef("charging_rule_name", AVP_TGPP_CHARGING_RULE_NAME, VENDOR_TGPP),
+        AvpGenDef("resource_allocation_notification", AVP_TGPP_RESOURCE_ALLOCATION_NOTIFICATION, VENDOR_TGPP),
     )
 
 
@@ -6050,3 +6100,30 @@ class ChargingRuleRemove:
         AvpGenDef("charging_rule_base_name", AVP_TGPP_CHARGING_RULE_BASE_NAME, VENDOR_TGPP),
         AvpGenDef("charging_rule_name", AVP_TGPP_CHARGING_RULE_NAME, VENDOR_TGPP),
     )
+
+
+@dataclasses.dataclass
+class ChargingRuleReport:
+    """A data container that represents the "Charging-Rule-Report" (1018) grouped AVP."""
+#    Charging-Rule-Report ::= < AVP Header: 1018 >
+#       *[ Charging-Rule-Name ]
+#       *[ Charging-Rule-Base-Name ]
+#        [ Bearer-Identifier ]
+#        [ PCC-Rule-Status ]
+#        [ Rule-Failure-Code ]
+#        [ Final-Unit-Indication ]
+#       *[ RAN-NAS-Release-Cause ]
+#       *[ Content-Version ]
+#       *[ AVP ]
+
+    charging_rule_base_name: list[Avp] = dataclasses.field(default_factory=list)
+    charging_rule_name: list[Avp] = dataclasses.field(default_factory=list)
+    pcc_rule_status: int = dataclasses.field(default_factory=list)
+
+    # noinspection PyDataclass
+    avp_def: dataclasses.InitVar[AvpGenType] = (
+        AvpGenDef("charging_rule_base_name", AVP_TGPP_CHARGING_RULE_BASE_NAME, VENDOR_TGPP),
+        AvpGenDef("charging_rule_name", AVP_TGPP_CHARGING_RULE_NAME, VENDOR_TGPP),
+        AvpGenDef("pcc_rule_status", AVP_TGPP_PCC_RULE_STATUS, VENDOR_TGPP),
+    )
+
