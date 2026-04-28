@@ -140,6 +140,7 @@ class UserAuthorizationAnswer(UserAuthorization):
 
 class UserAuthorizationRequest(UserAuthorization):
     """A User-Authorization-Request message."""
+    session_id: str
     vendor_specific_application_id: VendorSpecificApplicationId
     auth_session_state: int
     origin_host: bytes
@@ -157,6 +158,7 @@ class UserAuthorizationRequest(UserAuthorization):
     route_record: list[bytes]
 
     avp_def: AvpGenType = (
+        AvpGenDef("session_id", AVP_SESSION_ID, is_required=False),
         AvpGenDef("vendor_specific_application_id", AVP_VENDOR_SPECIFIC_APPLICATION_ID, is_required=True, type_class=VendorSpecificApplicationId),
         AvpGenDef("auth_session_state", AVP_AUTH_SESSION_STATE, is_required=True),
         AvpGenDef("origin_host", AVP_ORIGIN_HOST, is_required=True),

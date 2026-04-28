@@ -1340,7 +1340,7 @@ class SipAuthDataItem:
     # noinspection PyDataclass
     avp_def: dataclasses.InitVar[AvpGenType] = (
         AvpGenDef("sip_item_number", AVP_SIP_ITEM_NUMBER),
-        AvpGenDef("sip_authentication_scheme", AVP_SIP_AUTHENTICATION_SCHEME),
+        AvpGenDef("sip_authentication_scheme", AVP_TGPP_3GPP_SIP_AUTHENTICATION_SCHEME, VENDOR_TGPP),
         AvpGenDef("sip_authenticate", AVP_TGPP_3GPP_SIP_AUTHENTICATE, VENDOR_TGPP),
         AvpGenDef("sip_authorization", AVP_TGPP_3GPP_SIP_AUTHORIZATION, VENDOR_TGPP),
         AvpGenDef("sip_authentication_context", AVP_TGPP_SIP_AUTHENTICATION_CONTEXT, VENDOR_TGPP),
