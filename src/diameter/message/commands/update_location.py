@@ -192,6 +192,7 @@ class UpdateLocationRequest(UpdateLocation):
         AvpGenDef("user_name", AVP_USER_NAME, is_required=True),
         AvpGenDef("oc_supported_features", AVP_OC_SUPPORTED_FEATURES, type_class=OcSupportedFeatures),
         AvpGenDef("supported_features", AVP_TGPP_SUPPORTED_FEATURES, VENDOR_TGPP, type_class=SupportedFeatures),
+        AvpGenDef("terminal_information", AVP_TGPP_TERMINAL_INFORMATION, VENDOR_TGPP, type_class=TerminalInformation),
         AvpGenDef("rat_type", AVP_TGPP_RAT_TYPE, VENDOR_TGPP, is_required=True),
         AvpGenDef("ulr_flags", AVP_TGPP_ULR_FLAGS, VENDOR_TGPP, is_required=True),
         AvpGenDef("ue_srvcc_capability", AVP_TGPP_UE_SRVCC_CAPABILITY, VENDOR_TGPP),
